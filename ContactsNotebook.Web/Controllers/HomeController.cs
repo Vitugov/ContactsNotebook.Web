@@ -1,6 +1,9 @@
 ﻿using ContactsNotebook.DataAccess;
 using ContactsNotebook.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ContactsNotebook.Web.Controllers
 {
@@ -40,13 +43,15 @@ namespace ContactsNotebook.Web.Controllers
         {
             ViewBag.Editable = true;
             ViewBag.Route = "/create";
+            ViewBag.RequestMethod = "put";
             return View("Edit");
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("/create")]
-        public IActionResult Create(Contact contact)
+        public IActionResult Create([FromBody] Contact contact)
         {
+            var q = HttpContext.Request;
             if (ModelState.IsValid)
             {
                 _db.Contacts.Add(contact);
@@ -54,6 +59,7 @@ namespace ContactsNotebook.Web.Controllers
                 return RedirectToAction("Contacts");
             }
             ViewBag.Editable = true;
+            ViewBag.RequestMethod = "put";
             ViewBag.Route = "/create";
             return View("Edit", contact);
         }
@@ -73,6 +79,7 @@ namespace ContactsNotebook.Web.Controllers
             }
             ViewBag.Editable = false;
             ViewBag.Route = $"/{id}";
+            ViewBag.RequestMethod = "post";
             return View(contact);
         }
 
@@ -89,6 +96,7 @@ namespace ContactsNotebook.Web.Controllers
             }
             ViewBag.Editable = true;
             ViewBag.Route = $"/{contact.Id}";
+            ViewBag.RequestMethod = "post";
             return View(contact);
         }
     }

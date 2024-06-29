@@ -21,6 +21,7 @@
         <div class="row">
             <div class="col-md-6">
                 <form id="contactForm" method="post">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="border p-3 mt-3">
                         <div class="row pb-0">
                             <div class="col-md-6">
@@ -67,7 +68,7 @@
 
                         <div class="row pt-4">
                             <div class="col-6 p-1">
-                                <button type="submit"
+                                <button type="submit" @* onclick="submitForm('@requestMethod', '@route')" *@
                                     class="btn btn-primary form-control editable-btn">
                                     Сохранить
                                 </button>
