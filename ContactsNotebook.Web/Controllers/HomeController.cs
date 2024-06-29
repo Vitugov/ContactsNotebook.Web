@@ -6,7 +6,7 @@ namespace ContactsNotebook.Web.Controllers
 {
     public class HomeController(ApplicationDbContext dbContext) : Controller
     {
-        private ApplicationDbContext _db = dbContext;
+        private readonly ApplicationDbContext _db = dbContext;
         
         [HttpGet]
         [Route("/")]
@@ -29,9 +29,9 @@ namespace ContactsNotebook.Web.Controllers
             {
                 _db.Contacts.Remove(contactToDelete);
                 _db.SaveChanges();
-                return Json(new { success = true, message="Delete Successfull" });
+                return Json(new { success = true, message="Удаление прошло успешно" });
             }
-            return Json(new { success = false, message = "Error while deleting" });
+            return Json(new { success = false, message = "При удалении возникла ошибка" });
         }
 
         [HttpGet]
