@@ -1,0 +1,101 @@
+﻿@using ContactsNotebook.Models;
+@model Contact
+
+@{
+    bool isEditable = ViewBag.Editable ?? false;
+    string requestMethod = ViewBag.RequestMethod ?? "post";
+    string route = ViewBag.Route;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список контактов</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="contactForm" method="post">
+                    <div class="border p-3 mt-3">
+                        <div class="row pb-0">
+                            <div class="col-md-6">
+                                <h2 class="text-primary px-0">Контакт</h2>
+                            </div>
+                            <div class="col-md-6 text-end px-1">
+                                <button type="button" id="editToggle" class="btn btn-warning" onclick="toggleEditMode('@isEditable')"
+                                @(isEditable ? "disabled" : "")>
+                                    <i class="bi bi-unlock"></i> Редактировать
+                                </button>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="LastName" class="p-0"></label>
+                            <input asp-for="LastName" class="form-control editable" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="FirstName" class="p-0"></label>
+                            <input asp-for="FirstName" class="form-control editable" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="Patronymic" class="p-0"></label>
+                            <input asp-for="Patronymic" class="form-control editable" />
+                            <span asp-validation-for="Patronymic" class="text-danger"></span>
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="TelephoneNumber" class="p-0"></label>
+                            <input asp-for="TelephoneNumber" class="form-control editable" />
+                            <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="Address" class="p-0"></label>
+                            <input asp-for="Address" class="form-control editable" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="mb-1 row p-1">
+                            <label asp-for="Description" class="p-0"></label>
+                            <input asp-for="Description" class="form-control editable" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row pt-4">
+                            <div class="col-6 p-1">
+                                <button type="submit"
+                                    class="btn btn-primary form-control editable-btn">
+                                    Сохранить
+                                </button>
+                                
+                            </div>
+                            <div class="col-6 px-1">
+                                <a href="/" class="btn btn-secondary border form-control">
+                                    Вернуться к списку
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/Contact.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isEditable = @Json.Serialize(isEditable);
+            toggleEditModeInitial(isEditable);
+        });
+    </script>
+
+</body>
+</html>
