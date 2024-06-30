@@ -47,9 +47,8 @@ namespace ContactsNotebook.Web.Controllers
             return View("Edit");
         }
 
-        [HttpPut]
-        [Route("/create")]
-        public IActionResult Create([FromBody] Contact contact)
+        [HttpPut("/create")]
+        public IActionResult Create(Contact contact)
         {
             var q = HttpContext.Request;
             if (ModelState.IsValid)
@@ -64,8 +63,7 @@ namespace ContactsNotebook.Web.Controllers
             return View("Edit", contact);
         }
 
-        [HttpGet]
-        [Route("/{id}")]
+        [HttpGet("/{id:int}")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id==0)
@@ -83,10 +81,10 @@ namespace ContactsNotebook.Web.Controllers
             return View(contact);
         }
 
-        [HttpPost]
-        [Route("/{id}")]
+        [HttpPost("/{id:int}")]
         public IActionResult Edit(int id, Contact contact)
         {
+            var q = HttpContext.Request;
             if (ModelState.IsValid)
             {
                 contact.Id = id;
