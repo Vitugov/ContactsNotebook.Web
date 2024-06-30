@@ -4,7 +4,6 @@
 @{
     bool isEditable = ViewBag.Editable ?? false;
     string requestMethod = ViewBag.RequestMethod ?? "post";
-    string route = ViewBag.Route;
 }
 
 <!DOCTYPE html>
@@ -21,7 +20,7 @@
         <div class="row">
             <div class="col-md-6">
                 <form id="contactForm" method="post">
-                     <input type="hidden" name="_method" value="PUT">
+                     <input type="hidden" name="_method" value="@requestMethod">
                     <div class="border p-3 mt-3">
                         <div class="row pb-0">
                             <div class="col-md-6">
