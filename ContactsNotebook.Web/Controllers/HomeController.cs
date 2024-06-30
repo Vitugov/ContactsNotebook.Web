@@ -8,20 +8,17 @@ namespace ContactsNotebook.Web.Controllers
     {
         private readonly ApplicationDbContext _db = dbContext;
         
-        [HttpGet]
-        [Route("/")]
+        [HttpGet("/")]
         public IActionResult Contacts()
         {
             List<Contact> contacts = [.. _db.Contacts];
             return View(contacts);
         }
 
-        [HttpGet]
-        [Route("/GetAll")]
+        [HttpGet("/GetAll")]
         public IActionResult GetAll() => Json(new { data = _db.Contacts.ToList() });
 
-        [HttpDelete]
-        [Route("/Delete/{id:int}")]
+        [HttpDelete("/Delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             var contactToDelete = _db.Contacts.Find(id);
@@ -34,8 +31,7 @@ namespace ContactsNotebook.Web.Controllers
             return Json(new { success = false, message = "При удалении возникла ошибка" });
         }
 
-        [HttpGet]
-        [Route("/create")]
+        [HttpGet("/create")]
         public IActionResult Create()
         {
             ViewBag.Editable = true;
