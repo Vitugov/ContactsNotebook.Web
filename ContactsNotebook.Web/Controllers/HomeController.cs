@@ -75,9 +75,12 @@ namespace ContactsNotebook.Web.Controllers
         public IActionResult Edit(int id, Contact contact)
         {
             var q = HttpContext.Request;
+            if (contact.Id != id)
+            {
+                return BadRequest();
+            }
             if (ModelState.IsValid)
             {
-                contact.Id = id;
                 _db.Contacts.Update(contact);
                 _db.SaveChanges();
                 return RedirectToAction("Contacts");
