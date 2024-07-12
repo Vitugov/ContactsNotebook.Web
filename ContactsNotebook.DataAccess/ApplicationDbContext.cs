@@ -1,7 +1,5 @@
 ﻿using ContactsNotebook.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System.Collections.Generic;
 
 namespace ContactsNotebook.DataAccess
 {
@@ -9,8 +7,8 @@ namespace ContactsNotebook.DataAccess
     {
         public DbSet<Contact> Contacts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {  
-            
+        {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

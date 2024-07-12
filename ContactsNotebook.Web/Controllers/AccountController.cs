@@ -31,6 +31,7 @@ namespace ContactsNotebook.Web.Controllers
                     if (model.IsAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, "Administrator");
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
                     else
                     {

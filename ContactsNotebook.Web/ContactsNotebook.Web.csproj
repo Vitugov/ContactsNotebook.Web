@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ContactsNotebook.Models\ContactsNotebook.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
+
 </Project>

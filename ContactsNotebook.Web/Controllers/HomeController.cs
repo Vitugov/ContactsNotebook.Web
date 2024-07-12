@@ -8,7 +8,7 @@ namespace ContactsNotebook.Web.Controllers
     public class HomeController(ApplicationDbContext dbContext) : Controller
     {
         private readonly ApplicationDbContext _db = dbContext;
-        
+
         [HttpGet("/")]
         public IActionResult Contacts()
         {
@@ -33,7 +33,7 @@ namespace ContactsNotebook.Web.Controllers
             }
             return View(contact);
         }
-        
+
         [Authorize(Roles = "Administrator")]
         [HttpDelete("/Delete/{id:int}")]
         public IActionResult Delete(int id)
@@ -43,7 +43,7 @@ namespace ContactsNotebook.Web.Controllers
             {
                 _db.Contacts.Remove(contactToDelete);
                 _db.SaveChanges();
-                return Json(new { success = true, message="Удаление прошло успешно" });
+                return Json(new { success = true, message = "Удаление прошло успешно" });
             }
             return Json(new { success = false, message = "При удалении возникла ошибка" });
         }
@@ -76,19 +76,19 @@ namespace ContactsNotebook.Web.Controllers
         [HttpGet("/Edit/{id:int}")]
         public IActionResult Edit(int? id)
         {
-            if (id == null || id==0)
+            if (id == null || id == 0)
             {
                 return BadRequest();
             }
             var contact = _db.Contacts.Find(id);
             if (contact == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             ViewBag.RequestMethod = "post";
             return View(contact);
         }
-        
+
         [Authorize(Roles = "Administrator")]
         [HttpPost("/Edit/{id:int}")]
         public IActionResult Edit(int id, Contact contact)
