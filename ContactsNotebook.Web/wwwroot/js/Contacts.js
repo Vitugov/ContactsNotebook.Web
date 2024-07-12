@@ -5,8 +5,8 @@ $(document).ready(function () {
 
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/getall' },
+    dataTable = $('#contacts').DataTable({
+        "ajax": { url: '/getall'},
         "language": { url: '/lib/DataTables/Translations/ru.js' },
         "columns": [
             { data: 'id', width: "5%" },

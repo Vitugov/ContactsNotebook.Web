@@ -10,6 +10,8 @@ namespace ContactsNotebook.Models.Identity
 
         [Required]
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$", ErrorMessage =
+            "Пароль должен содержать не менее 6 символов, содержать как минимум одну цифру, одну букву в нижнем регистре и одну заглавную букву.")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password)]

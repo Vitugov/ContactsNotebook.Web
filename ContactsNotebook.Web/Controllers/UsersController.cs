@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("/[controller]/[action]")]
     [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
@@ -20,7 +20,7 @@ namespace ContactsNotebook.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() => Json(new { data = LoadFromIdentities([.. _userManager.Users]) });
+        public async Task<IActionResult> GetAll() => Json(new { data = await LoadFromIdentities([.. _userManager.Users]) });
 
         [HttpGet]
         public IActionResult Add()
@@ -57,10 +57,10 @@ namespace ContactsNotebook.Web.Controllers
 
         }
 
-        [HttpDelete("[controller]/[action]/{email}")]
-        public async Task<IActionResult> Delete(string email)
+        [HttpDelete("/[controller]/[action]/{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            var userToDelete = await _userManager.FindByEmailAsync(email);
+            var userToDelete = await _userManager.FindByIdAsync(id);
             if (userToDelete == null)
             {
                 return NotFound();
@@ -79,7 +79,7 @@ namespace ContactsNotebook.Web.Controllers
             foreach (var identityUser in identityUsers)
             {
                 var isAdmin = await _userManager.IsInRoleAsync(identityUser, "Administrator");
-                var newUser = new User { Email = identityUser.Email, IsAdmin = isAdmin };
+                var newUser = new User { Id = identityUser.Id, Email = identityUser.Email, IsAdmin = isAdmin };
                 usersList.Add(newUser);
             }
             return usersList;
