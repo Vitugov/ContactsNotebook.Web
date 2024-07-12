@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Web", "ContactsNotebook.Web\ContactsNotebook.Web.csproj", "{363D1D5A-BDBD-40EC-90E7-291653BA667B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Web", "ContactsNotebook.Web\ContactsNotebook.Web.csproj", "{363D1D5A-BDBD-40EC-90E7-291653BA667B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3} = {283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}
 		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E} = {A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Models", "ContactsNotebook.Models\ContactsNotebook.Models.csproj", "{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Models", "ContactsNotebook.Models\ContactsNotebook.Models.csproj", "{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.DataAccess", "ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj", "{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.DataAccess", "ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj", "{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E} = {A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Identity", "ContactsNotebook.Identity\ContactsNotebook.Identity.csproj", "{3B80FF25-9178-4198-91B7-74B30D322C39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B80FF25-9178-4198-91B7-74B30D322C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B80FF25-9178-4198-91B7-74B30D322C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B80FF25-9178-4198-91B7-74B30D322C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B80FF25-9178-4198-91B7-74B30D322C39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

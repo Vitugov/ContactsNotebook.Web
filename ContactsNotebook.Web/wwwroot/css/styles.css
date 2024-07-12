@@ -336,3 +336,7 @@
 .btn-flash-border-primary {
     color: dodgerblue;
 }
+
+table.dataTable > tbody > tr > th, table.dataTable > tbody > tr > td {
+    padding: 5px 10px 4px 10px
+}

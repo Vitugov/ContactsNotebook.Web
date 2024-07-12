@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    bool isEditable = User.Identity!.IsAuthenticated && User.IsInRole("Administrator");
+}
+
 @model List<Contact>;
 
     <div class="container">
@@ -7,7 +10,7 @@
                     <h2 class="text-primary py-2">Список контактов</h2>
                 </div>
             <div class="col-4 text-end px-0 py-2">
-                <a asp-controller="Home" asp-action="Create" class="btn btn-primary">
+                <a asp-controller="Home" asp-action="Edit" class="btn btn-primary">
                     <i class="bi bi-file-earmark-plus"></i> Создать новый контакт
                     </a>
                 </div>
@@ -18,11 +21,11 @@
             <table id="tblData" class="table table-hover">
                 <thead>
                     <tr class="table-primary">
-                            <th scope="col">Id</th>
-                            <th scope="col">Фамилия</th>
-                            <th scope ="col">Имя</th>
-                            <th scope="col">Отчество</th>
-                            <th scope="col"></th>
+                        <th class="py-2" scope="col">Id</th>
+                        <th class="py-2" scope="col">Фамилия</th>
+                        <th class="py-2" scope="col">Имя</th>
+                        <th class="py-2" scope="col">Отчество</th>
+                        <th class="py-2" scope="col"></th>
                         </tr>
                     </thead>
                 </table>
@@ -32,6 +35,9 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js" asp-append-version="true"></script>
+    <script>
+        var isEditable = @Json.Serialize(isEditable);
+    </script>
     <script src="~/js/Contacts.js" asp-append-version="true"></script>
 
 

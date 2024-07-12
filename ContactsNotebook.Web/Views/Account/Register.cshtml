@@ -1,0 +1,54 @@
+﻿@model ContactsNotebook.Models.Identity.RegisterViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form id="contactForm" method="post" class="bg-white">
+                <div class="border p-3 mt-1">
+                    <div class="row pb-0">
+
+                            <h2 class="text-primary px-0">Регистрация пользователя</h2>
+
+                        <hr />
+                    </div>
+                    <div class="mb-1 row p-1">
+                        <label asp-for="Email" class="p-0"></label>
+                        <input asp-for="Email" class="form-control editable" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-1 row p-1">
+                        <label asp-for="Password" class="p-0"></label>
+                        <input asp-for="Password" class="form-control editable" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-1 row p-1">
+                        <label asp-for="ConfirmPassword" class="p-0"></label>
+                        <input asp-for="ConfirmPassword" class="form-control editable" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="mb-1 row p-1">
+                        <div class="form-check d-flex align-items-center">
+                            <input type="checkbox" asp-for="IsAdmin" class="form-check-input me-2 mb-1" />
+                            <label asp-for="IsAdmin" class="form-check-label"></label>
+                        </div>
+                        <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                    </div>
+
+                    <div class="row pt-4">
+                        <div class="col-6 px-1">
+                            <button type="submit" class="btn btn-primary form-control editable-btn">
+                                Зарегистрироваться
+                            </button>
+
+                        </div>
+                        <div class="col-6 px-1">
+                            <a href="/" class="btn btn-secondary border form-control">
+                                Вернуться к списку
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

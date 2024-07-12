@@ -1,5 +1,6 @@
 ﻿using ContactsNotebook.DataAccess;
 using ContactsNotebook.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
@@ -18,6 +19,22 @@ namespace ContactsNotebook.Web.Controllers
         [HttpGet("/GetAll")]
         public IActionResult GetAll() => Json(new { data = _db.Contacts.ToList() });
 
+        [HttpGet("/{id:int}")]
+        public IActionResult Display(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return BadRequest();
+            }
+            var contact = _db.Contacts.Find(id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return View(contact);
+        }
+        
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("/Delete/{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -31,16 +48,17 @@ namespace ContactsNotebook.Web.Controllers
             return Json(new { success = false, message = "При удалении возникла ошибка" });
         }
 
-        [HttpGet("/create")]
-        public IActionResult Create()
+        [Authorize(Roles = "Administrator,User")]
+        [HttpGet("/Edit")]
+        public IActionResult Edit()
         {
-            ViewBag.Editable = true;
             ViewBag.RequestMethod = "put";
-            return View("Edit");
+            return View();
         }
 
-        [HttpPut("/create")]
-        public IActionResult Create(Contact contact)
+        [Authorize(Roles = "Administrator,User")]
+        [HttpPut("/Edit")]
+        public IActionResult Edit(Contact contact)
         {
             var q = HttpContext.Request;
             if (ModelState.IsValid)
@@ -51,31 +69,32 @@ namespace ContactsNotebook.Web.Controllers
             }
             ViewBag.Editable = true;
             ViewBag.RequestMethod = "put";
-            return View("Edit", contact);
+            return View(contact);
         }
 
-        [HttpGet("/{id:int}")]
+        [Authorize(Roles = "Administrator")]
+        [HttpGet("/Edit/{id:int}")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id==0)
             {
-                return NotFound();
+                return BadRequest();
             }
             var contact = _db.Contacts.Find(id);
             if (contact == null)
             {
                 return NotFound(); 
             }
-            ViewBag.Editable = false;
             ViewBag.RequestMethod = "post";
             return View(contact);
         }
-
-        [HttpPost("/{id:int}")]
+        
+        [Authorize(Roles = "Administrator")]
+        [HttpPost("/Edit/{id:int}")]
         public IActionResult Edit(int id, Contact contact)
         {
-            var q = HttpContext.Request;
-            if (contact.Id != id)
+            contact.Id = id;
+            if (id == 0)
             {
                 return BadRequest();
             }
@@ -85,7 +104,6 @@ namespace ContactsNotebook.Web.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Contacts");
             }
-            ViewBag.Editable = true;
             ViewBag.RequestMethod = "post";
             return View(contact);
         }

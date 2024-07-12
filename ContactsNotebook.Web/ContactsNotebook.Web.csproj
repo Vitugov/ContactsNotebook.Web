@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj" />
+    <ProjectReference Include="..\ContactsNotebook.Identity\ContactsNotebook.Identity.csproj" />
     <ProjectReference Include="..\ContactsNotebook.Models\ContactsNotebook.Models.csproj" />
   </ItemGroup>
 
