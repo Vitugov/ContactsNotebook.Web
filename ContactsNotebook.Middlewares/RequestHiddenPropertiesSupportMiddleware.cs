@@ -1,4 +1,7 @@
-﻿namespace ContactsNotebook.Web.Middlewares
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace ContactsNotebook.Middlewares
 {
     public class RequestHiddenPropertiesSupportMiddleware
     {
@@ -11,7 +14,7 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Method == HttpMethods.Post && context.Request.Form.ContainsKey("_method"))
+            if (context.Request.Method == HttpMethods.Post && context.Request.HasFormContentType && context.Request.Form.ContainsKey("_method"))
             {
                 var method = context.Request.Form["_method"].ToString().ToUpper();
                 if (HttpMethods.IsPut(method) || HttpMethods.IsDelete(method) || HttpMethods.IsPatch(method))

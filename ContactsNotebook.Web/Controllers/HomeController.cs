@@ -1,32 +1,36 @@
-﻿using ContactsNotebook.DataAccess;
+﻿using ContactsNotebook.ApiClient;
+using ContactsNotebook.DataAccess;
 using ContactsNotebook.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
 {
-    public class HomeController(ApplicationDbContext dbContext) : Controller
+    public class HomeController(IContactsApiClient contactsApiClient) : Controller
     {
-        private readonly ApplicationDbContext _db = dbContext;
+        private readonly IContactsApiClient _contactsApiClient = contactsApiClient;
 
         [HttpGet("/")]
         public IActionResult Contacts()
         {
-            List<Contact> contacts = [.. _db.Contacts];
-            return View(contacts);
+            return View();
         }
 
         [HttpGet("/GetAll")]
-        public IActionResult GetAll() => Json(new { data = _db.Contacts.ToList() });
+        public async Task<IActionResult> GetAll()
+        {
+            var jsonString = await _contactsApiClient.GetContactsAsync();
+            return Content(jsonString, "application/json");
+        }
 
         [HttpGet("/{id:int}")]
-        public IActionResult Display(int? id)
+        public async Task<IActionResult> Display(int? id)
         {
             if (id == null || id == 0)
             {
                 return BadRequest();
             }
-            var contact = _db.Contacts.Find(id);
+            var contact = await _contactsApiClient.GetContactByIdAsync((int)id);
             if (contact == null)
             {
                 return NotFound();
@@ -36,13 +40,11 @@ namespace ContactsNotebook.Web.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("/Delete/{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var contactToDelete = _db.Contacts.Find(id);
-            if (contactToDelete != null)
+            var result = await _contactsApiClient.DeleteContactAsync((int)id);
+            if (result == true)
             {
-                _db.Contacts.Remove(contactToDelete);
-                _db.SaveChanges();
                 return Json(new { success = true, message = "Удаление прошло успешно" });
             }
             return Json(new { success = false, message = "При удалении возникла ошибка" });
@@ -58,14 +60,16 @@ namespace ContactsNotebook.Web.Controllers
 
         [Authorize(Roles = "Administrator,User")]
         [HttpPut("/Edit")]
-        public IActionResult Edit(Contact contact)
+        public async Task<IActionResult> Edit(Contact contact)
         {
-            var q = HttpContext.Request;
             if (ModelState.IsValid)
             {
-                _db.Contacts.Add(contact);
-                _db.SaveChanges();
-                return RedirectToAction("Contacts");
+                var result = await _contactsApiClient.CreateContactAsync(contact);
+                if (result)
+                {
+                    return RedirectToAction("Contacts");
+                }
+                return StatusCode(500, new { message = "При создании объекта возникла ошибка"});
             }
             ViewBag.Editable = true;
             ViewBag.RequestMethod = "put";
@@ -74,13 +78,13 @@ namespace ContactsNotebook.Web.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpGet("/Edit/{id:int}")]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || id == 0)
             {
                 return BadRequest();
             }
-            var contact = _db.Contacts.Find(id);
+            var contact = await _contactsApiClient.GetContactByIdAsync((int)id);
             if (contact == null)
             {
                 return NotFound();
@@ -91,7 +95,7 @@ namespace ContactsNotebook.Web.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("/Edit/{id:int}")]
-        public IActionResult Edit(int id, Contact contact)
+        public async Task<IActionResult> Edit(int id, Contact contact)
         {
             contact.Id = id;
             if (id == 0)
@@ -100,8 +104,11 @@ namespace ContactsNotebook.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Contacts.Update(contact);
-                _db.SaveChanges();
+                var result = await _contactsApiClient.UpdateContactAsync(contact);
+                if (!result)
+                {
+                    return StatusCode(500, new { message = "При создании обновлении объекта возникла ошибка" });
+                }
                 return RedirectToAction("Contacts");
             }
             ViewBag.RequestMethod = "post";

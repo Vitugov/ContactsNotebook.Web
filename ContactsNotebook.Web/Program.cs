@@ -1,6 +1,7 @@
+using ContactsNotebook.ApiClient;
 using ContactsNotebook.DataAccess;
 using ContactsNotebook.Identity;
-using ContactsNotebook.Web.Middlewares;
+using ContactsNotebook.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 namespace ContactsNotebook.Web
@@ -10,8 +11,13 @@ namespace ContactsNotebook.Web
         public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddHttpClient("ContactsApiClient", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("ContactsApiConnection")!);
+
+            });
+            builder.Services.AddSingleton<IContactsApiClient, ContactsApiClient>();
             builder.Services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()

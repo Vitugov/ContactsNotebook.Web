@@ -16,7 +16,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.DataAccess
 		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E} = {A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Identity", "ContactsNotebook.Identity\ContactsNotebook.Identity.csproj", "{3B80FF25-9178-4198-91B7-74B30D322C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Identity", "ContactsNotebook.Identity\ContactsNotebook.Identity.csproj", "{3B80FF25-9178-4198-91B7-74B30D322C39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Api", "ContactsNotebook.Api\ContactsNotebook.Api.csproj", "{5EC95041-94D5-476A-B93E-0E211E7B0F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Middlewares", "ContactsNotebook.Middlewares\ContactsNotebook.Middlewares.csproj", "{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.ApiClient", "ContactsNotebook.ApiClient\ContactsNotebook.ApiClient.csproj", "{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +46,18 @@ Global
 		{3B80FF25-9178-4198-91B7-74B30D322C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B80FF25-9178-4198-91B7-74B30D322C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B80FF25-9178-4198-91B7-74B30D322C39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
