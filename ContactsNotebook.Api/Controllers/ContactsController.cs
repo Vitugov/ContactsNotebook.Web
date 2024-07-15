@@ -57,7 +57,7 @@ namespace ContactsNotebook.Api.Controllers
                 await _db.SaveChangesAsync();
                 return Ok();
             }
-            return Json(contact);
+            return BadRequest(ModelState);
         }
 
         [HttpPut("{id:int}")]
@@ -65,7 +65,7 @@ namespace ContactsNotebook.Api.Controllers
         {
             if (id == null && id == 0)
             {
-                return BadRequest();
+                return BadRequest(new { error = "id не может быть 0." });
             }
             contact.Id = (int)id!;
             if (ModelState.IsValid)
@@ -74,7 +74,7 @@ namespace ContactsNotebook.Api.Controllers
                 await _db.SaveChangesAsync();
                 return Ok();
             }
-            return Json(contact);
+            return BadRequest(ModelState);
         }
     }
 }
