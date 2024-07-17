@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ContactsNotebook.Identity.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
+    [DbContext(typeof(AppIdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -1,8 +1,7 @@
+using AuthenticationServer.ApiClient;
+using AuthenticationServer.Client;
 using ContactsNotebook.ApiClient;
-using ContactsNotebook.DataAccess;
-using ContactsNotebook.Identity;
 using ContactsNotebook.Middlewares;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 namespace ContactsNotebook.Web
 {
@@ -16,41 +15,25 @@ namespace ContactsNotebook.Web
             {
                 client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("ContactsApiConnection")!);
 
-            });
+            }).AddHttpMessageHandler<AuthorizationHandler>();
+
+            builder.Services.AddHttpClient("AuthenticationApiClient", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("AuthenticationApiConnection")!);
+
+            }).AddHttpMessageHandler<AuthorizationHandler>();
+
+            // Регистрация IHttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
+
+            // Регистрация AuthorizationHandler
+            builder.Services.AddTransient<AuthorizationHandler>();
+
             builder.Services.AddSingleton<IContactsApiClient, ContactsApiClient>();
-            builder.Services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
-                .AddDefaultTokenProviders();
-            builder.Services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
-            });
-
-            builder.Services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-            });
+            builder.Services.AddSingleton<IAuthenticationApiClient, AuthenticationApiClient>();
 
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
-
-            await RegisterRoles(app);
 
             app.UseStaticFiles();
             app.UseRequestHiddenPropertiesSupport();
@@ -62,22 +45,6 @@ namespace ContactsNotebook.Web
             app.Run();
         }
 
-        public static async Task RegisterRoles(WebApplication app)
-        {
-            using (var scope = app.Services.CreateScope())
-            {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                var roles = new[] { "Administrator", "User" };
-
-                foreach (var role in roles)
-                {
-                    if (!await roleManager.RoleExistsAsync(role))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(role));
-                    }
-                }
-            }
-        }
     }
 }

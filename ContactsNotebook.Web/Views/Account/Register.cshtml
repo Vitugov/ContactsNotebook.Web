@@ -1,5 +1,5 @@
 ﻿@model ContactsNotebook.Models.Identity.RegisterViewModel
-@if (User.Identity.IsAuthenticated)
+@if (ViewBag.UserRole != "")
 {
     <p>Вы уже зарегистрированы</p>
 }

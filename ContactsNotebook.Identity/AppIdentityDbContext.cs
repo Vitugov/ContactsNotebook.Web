@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContactsNotebook.Identity
 {
-    public class IdentityDbContext : IdentityDbContext<IdentityUser>
+    public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)
         {
         }

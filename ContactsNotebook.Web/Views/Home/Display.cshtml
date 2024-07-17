@@ -2,7 +2,7 @@
 @model Contact
 @{
     string requestMethod = ViewBag.RequestMethod ?? "post";
-    bool isEditable = User.Identity!.IsAuthenticated && User.IsInRole("Administrator");
+    bool isEditable = ViewBag.UserRole == "Administrator" ? true : false;
 }
 
 <div class="container">

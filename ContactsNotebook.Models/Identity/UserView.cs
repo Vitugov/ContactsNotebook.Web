@@ -2,7 +2,7 @@
 
 namespace ContactsNotebook.Models.Identity
 {
-    public class User
+    public class UserView
     {
         public string? Id { get; set; }
         [Required]

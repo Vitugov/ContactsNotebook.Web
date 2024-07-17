@@ -1,6 +1,5 @@
 ﻿using ContactsNotebook.Models;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 
 namespace ContactsNotebook.ApiClient

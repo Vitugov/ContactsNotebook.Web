@@ -1,7 +1,6 @@
 ﻿using ContactsNotebook.ApiClient;
-using ContactsNotebook.DataAccess;
 using ContactsNotebook.Models;
-using Microsoft.AspNetCore.Authorization;
+using ContactsNotebook.Web.Services.JwtTokenReader;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
@@ -13,6 +12,8 @@ namespace ContactsNotebook.Web.Controllers
         [HttpGet("/")]
         public IActionResult Contacts()
         {
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+
             return View();
         }
 
@@ -35,10 +36,12 @@ namespace ContactsNotebook.Web.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+
             return View(contact);
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpDelete("/Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -50,15 +53,14 @@ namespace ContactsNotebook.Web.Controllers
             return Json(new { success = false, message = "При удалении возникла ошибка" });
         }
 
-        [Authorize(Roles = "Administrator,User")]
         [HttpGet("/Edit")]
         public IActionResult Edit()
         {
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
             ViewBag.RequestMethod = "put";
             return View();
         }
 
-        [Authorize(Roles = "Administrator,User")]
         [HttpPut("/Edit")]
         public async Task<IActionResult> Edit(Contact contact)
         {
@@ -69,14 +71,13 @@ namespace ContactsNotebook.Web.Controllers
                 {
                     return RedirectToAction("Contacts");
                 }
-                return StatusCode(500, new { message = "При создании объекта возникла ошибка"});
+                return StatusCode(500, new { success = false, message = "При создании объекта возникла ошибка" });
             }
-            ViewBag.Editable = true;
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
             ViewBag.RequestMethod = "put";
             return View(contact);
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpGet("/Edit/{id:int}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -89,11 +90,12 @@ namespace ContactsNotebook.Web.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
             ViewBag.RequestMethod = "post";
             return View(contact);
         }
 
-        [Authorize(Roles = "Administrator")]
         [HttpPost("/Edit/{id:int}")]
         public async Task<IActionResult> Edit(int id, Contact contact)
         {
@@ -107,10 +109,12 @@ namespace ContactsNotebook.Web.Controllers
                 var result = await _contactsApiClient.UpdateContactAsync(contact);
                 if (!result)
                 {
-                    return StatusCode(500, new { message = "При создании обновлении объекта возникла ошибка" });
+                    return StatusCode(500, new { success = false, message = "При создании обновлении объекта возникла ошибка" });
                 }
                 return RedirectToAction("Contacts");
             }
+
+            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
             ViewBag.RequestMethod = "post";
             return View(contact);
         }

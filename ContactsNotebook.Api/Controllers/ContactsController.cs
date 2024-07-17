@@ -1,6 +1,6 @@
-﻿using ContactsNotebook.DataAccess;
+﻿using ContactsNotebook.Api.Attributes;
+using ContactsNotebook.DataAccess;
 using ContactsNotebook.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +31,7 @@ namespace ContactsNotebook.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Administrator]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
@@ -49,6 +50,7 @@ namespace ContactsNotebook.Api.Controllers
 
 
         [HttpPost]
+        [User]
         public async Task<IActionResult> Add([FromBody] Contact contact)
         {
             if (ModelState.IsValid)
@@ -61,6 +63,7 @@ namespace ContactsNotebook.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Administrator]
         public async Task<IActionResult> Update(int? id, [FromBody] Contact contact)
         {
             if (id == null && id == 0)
