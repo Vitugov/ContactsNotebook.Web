@@ -1,5 +1,5 @@
 ﻿using AuthenticationServer.Api.Models.Identity;
-using ContactsNotebook.Models.Identity;
+using ContactsNotebook.Lib.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthenticationServer.Api.Services.IdentityRepository

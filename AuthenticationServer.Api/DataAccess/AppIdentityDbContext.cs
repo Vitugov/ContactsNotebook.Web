@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactsNotebook.Identity
+namespace AuthenticationServer.Api.DataAccess
 {
     public class AppIdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {

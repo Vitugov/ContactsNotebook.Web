@@ -1,7 +1,7 @@
-using ContactsNotebook.DataAccess;
-using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Api.DataAccess;
+using ContactsNotebook.Lib.Configuration;
+using ContactsNotebook.Lib.Middlewares;
 using ContactsNotebook.Lib.Services.JwtTokenHandler;
-using ContactsNotebook.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 

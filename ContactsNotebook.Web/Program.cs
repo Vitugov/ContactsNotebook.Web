@@ -1,10 +1,9 @@
-using AuthenticationServer.ApiClient;
-using AuthenticationServer.Client;
-using ContactsNotebook.ApiClient;
-using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Configuration;
+using ContactsNotebook.Lib.Middlewares;
+using ContactsNotebook.Lib.Services.ApiClients;
+using ContactsNotebook.Lib.Services.ApiClients.Authentication;
+using ContactsNotebook.Lib.Services.ApiClients.Contacts;
 using ContactsNotebook.Lib.Services.JwtTokenHandler;
-using ContactsNotebook.Middlewares;
-using Microsoft.EntityFrameworkCore;
 namespace ContactsNotebook.Web
 {
     public class Program

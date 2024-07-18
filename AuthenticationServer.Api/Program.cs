@@ -1,8 +1,8 @@
+using AuthenticationServer.Api.DataAccess;
 using AuthenticationServer.Api.Models.Identity;
 using AuthenticationServer.Api.Services.IdentityRepository;
 using AuthenticationServer.Api.Services.TokenGenerator;
-using ContactsNotebook.Identity;
-using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Configuration;
 using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

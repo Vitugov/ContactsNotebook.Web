@@ -1,6 +1,6 @@
-﻿using ContactsNotebook.DataAccess;
+﻿using ContactsNotebook.Api.DataAccess;
 using ContactsNotebook.Lib.Attributes;
-using ContactsNotebook.Models;
+using ContactsNotebook.Lib.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

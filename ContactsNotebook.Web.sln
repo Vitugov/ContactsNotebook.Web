@@ -4,29 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Web", "ContactsNotebook.Web\ContactsNotebook.Web.csproj", "{363D1D5A-BDBD-40EC-90E7-291653BA667B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3} = {283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E} = {A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Models", "ContactsNotebook.Models\ContactsNotebook.Models.csproj", "{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.DataAccess", "ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj", "{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E} = {A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Api", "ContactsNotebook.Api\ContactsNotebook.Api.csproj", "{5EC95041-94D5-476A-B93E-0E211E7B0F83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Middlewares", "ContactsNotebook.Middlewares\ContactsNotebook.Middlewares.csproj", "{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.ApiClient", "ContactsNotebook.ApiClient\ContactsNotebook.ApiClient.csproj", "{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationServer.Api", "AuthenticationServer.Api\AuthenticationServer.Api.csproj", "{3D51586D-02E1-4C31-92D9-E5E34ACD42AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationServer.ApiClient", "AuthenticationServer.Client\AuthenticationServer.ApiClient.csproj", "{B4F8F5A4-7AFB-4607-9B7C-2C9948177345}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.Lib", "ContactsNotebook.Lib\ContactsNotebook.Lib.csproj", "{84BCF09D-CF21-4974-841E-B815702764EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Lib", "ContactsNotebook.Lib\ContactsNotebook.Lib.csproj", "{84BCF09D-CF21-4974-841E-B815702764EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,34 +21,14 @@ Global
 		{363D1D5A-BDBD-40EC-90E7-291653BA667B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{363D1D5A-BDBD-40EC-90E7-291653BA667B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{363D1D5A-BDBD-40EC-90E7-291653BA667B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9C04EA9-E3F4-4D10-9F10-ADC33D43C92E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{283DAAEC-B399-4DB4-BBB6-E7D55FDB0FD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EC95041-94D5-476A-B93E-0E211E7B0F83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66D45D6F-DBE5-4C1C-B9DF-455AAD067361}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C26047C7-AF73-4836-8DA2-AB4835DCF4F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D51586D-02E1-4C31-92D9-E5E34ACD42AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D51586D-02E1-4C31-92D9-E5E34ACD42AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D51586D-02E1-4C31-92D9-E5E34ACD42AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D51586D-02E1-4C31-92D9-E5E34ACD42AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4F8F5A4-7AFB-4607-9B7C-2C9948177345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4F8F5A4-7AFB-4607-9B7C-2C9948177345}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4F8F5A4-7AFB-4607-9B7C-2C9948177345}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4F8F5A4-7AFB-4607-9B7C-2C9948177345}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,5 +1,5 @@
 ﻿using AuthenticationServer.Api.Models.Identity;
-using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

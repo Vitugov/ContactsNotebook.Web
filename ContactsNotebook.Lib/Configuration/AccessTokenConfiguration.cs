@@ -1,4 +1,4 @@
-﻿namespace ContactsNotebook.Lib.Models.Configuration
+﻿namespace ContactsNotebook.Lib.Configuration
 {
     public class AccessTokenConfiguration
     {

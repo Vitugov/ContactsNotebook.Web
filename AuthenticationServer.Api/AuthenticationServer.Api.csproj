@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContactsNotebook.Lib\ContactsNotebook.Lib.csproj" />
-    <ProjectReference Include="..\ContactsNotebook.Models\ContactsNotebook.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

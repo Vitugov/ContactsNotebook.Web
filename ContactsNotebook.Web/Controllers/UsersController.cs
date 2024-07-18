@@ -1,6 +1,6 @@
-﻿using AuthenticationServer.ApiClient;
+﻿using ContactsNotebook.Lib.Models.Identity;
+using ContactsNotebook.Lib.Services.ApiClients.Authentication;
 using ContactsNotebook.Lib.Services.JwtTokenHandler;
-using ContactsNotebook.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers

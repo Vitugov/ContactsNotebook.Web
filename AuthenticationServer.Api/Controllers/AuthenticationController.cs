@@ -1,7 +1,7 @@
 ﻿using AuthenticationServer.Api.Services.IdentityRepository;
 using AuthenticationServer.Api.Services.TokenGenerator;
 using ContactsNotebook.Lib.Attributes;
-using ContactsNotebook.Models.Identity;
+using ContactsNotebook.Lib.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationServer.Api.Controllers

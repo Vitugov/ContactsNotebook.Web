@@ -1,6 +1,6 @@
-﻿using ContactsNotebook.ApiClient;
+﻿using ContactsNotebook.Lib.Models;
+using ContactsNotebook.Lib.Services.ApiClients.Contacts;
 using ContactsNotebook.Lib.Services.JwtTokenHandler;
-using ContactsNotebook.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
