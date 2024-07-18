@@ -16,5 +16,6 @@ namespace AuthenticationServer.Api.Services.IdentityRepository
         public Task<bool> RefreshToken(ApplicationUser user, string token);
         public Task LogOutAsync();
         public ApplicationUser? FindUserByToken(string? token);
+        public Task<ApplicationUser?> FindUserByGuid(Guid id);
     }
 }

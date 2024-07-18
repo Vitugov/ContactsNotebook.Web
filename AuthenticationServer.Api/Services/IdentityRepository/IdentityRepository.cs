@@ -111,5 +111,11 @@ namespace AuthenticationServer.Api.Services.IdentityRepository
             var user = _userManager.Users.Where(user => user.LastToken == token).FirstOrDefault();
             return user;
         }
+
+        public async Task<ApplicationUser?> FindUserByGuid(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            return user;
+        }
     }
 }

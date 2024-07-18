@@ -19,7 +19,7 @@ namespace ContactsNotebook.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var jsonString = await _authenticationApiClient.GetUsers();
+            var jsonString = await _authenticationApiClient.GetUsersAsync();
             return Content(jsonString, "application/json");
         }
 
@@ -34,47 +34,33 @@ namespace ContactsNotebook.Web.Controllers
         public async Task<IActionResult> Add(RegisterViewModel model)
         {
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                //var result = await _userManager.CreateAsync(user, model.Password!);
-                //if (result.Succeeded)
-                //{
-                //    if (model.IsAdmin)
-                //    {
-                //        await _userManager.AddToRoleAsync(user, "Administrator");
-                //        await _userManager.AddToRoleAsync(user, "User");
-                //    }
-                //    else
-                //    {
-                //        await _userManager.AddToRoleAsync(user, "User");
-                //    }
-                //    return RedirectToAction("Index");
-                //}
-                //foreach (var error in result.Errors)
-                //{
-                //    ModelState.AddModelError(string.Empty, error.Description);
-                //}
-            }
-            return View(model);
+                return View(model);
 
+            }
+            var result = await _authenticationApiClient.RegisterUserAsync(model);
+            if (!result)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction("Users", "Index");
         }
 
         [HttpDelete("/[controller]/[action]/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            //var userToDelete = await _userManager.FindByIdAsync(id);
-            //if (userToDelete == null)
-            //{
-            //    return NotFound();
-            //}
-            //if (User.Identity == userToDelete)
-            //{
-            //    return BadRequest();
-            //}
-            //await _userManager.DeleteAsync(userToDelete);
-            return RedirectToAction("Index");
+            if (!Guid.TryParse(id, out var guid))
+            {
+                return BadRequest();
+            }
+            var success = await _authenticationApiClient.DeleteUserAsync(guid);
+            if (!success)
+            {
+                return StatusCode(500, new { ErrorMessage = "При удалении пользователя возникла ошибка." });
+            }
+            return Ok();
         }
     }
 }

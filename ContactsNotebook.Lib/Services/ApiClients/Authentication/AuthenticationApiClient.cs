@@ -44,11 +44,18 @@ namespace ContactsNotebook.Lib.Services.ApiClients.Authentication
             return true;
         }
 
-        public async Task<string> GetUsers()
+        public async Task<string> GetUsersAsync()
         {
             var response = await _httpClient.GetAsync($"Authentication/GetUsers");
             var content = await response.Content.ReadAsStringAsync();
             return content;
+        }
+
+        public async Task<bool> DeleteUserAsync(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"Authentication/Delete/{id}");
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

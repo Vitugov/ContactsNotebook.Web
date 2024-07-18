@@ -2,15 +2,17 @@
 using AuthenticationServer.Api.Services.TokenGenerator;
 using ContactsNotebook.Lib.Attributes;
 using ContactsNotebook.Lib.Models.Identity;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationServer.Api.Controllers
 {
     [Route("api/v1/[controller]/[action]")]
-    public class AuthenticationController(IIdentityRepository repository, IAccessTokenGenerator tokenGenerator) : Controller
+    public class AuthenticationController(IIdentityRepository repository, IAccessTokenGenerator tokenGenerator, JwtTokenHandler jwtTokenHandler) : Controller
     {
         private readonly IIdentityRepository _repository = repository;
         private readonly IAccessTokenGenerator _tokenGenerator = tokenGenerator;
+        private readonly JwtTokenHandler _jwtTokenHandler = jwtTokenHandler;
 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
@@ -42,6 +44,17 @@ namespace AuthenticationServer.Api.Controllers
             if (!doesExist)
             {
                 return BadRequest(new { Error = "Невозможно удалить: Пользователь с таким id не найден." });
+            }
+
+            var token = _jwtTokenHandler.GetTokenFromHeader(ControllerContext);
+            var user = _repository.FindUserByToken(token);
+            if (user == null)
+            {
+                return StatusCode(500, new { Error = "Ваша учетная запись не найдена в системе." });
+            }
+            if (user.Id == id)
+            {
+                return BadRequest(new { Error = "Вы не можете удалить себя." });
             }
             var result = await _repository.DeleteUserAsync(id);
             if (!result)

@@ -8,6 +8,7 @@ namespace ContactsNotebook.Lib.Services.ApiClients.Authentication
 
         public Task<TokenResponse?> LoginUserAsync(LoginViewModel loginViewModel);
         public Task<bool> LogoutUserAsync();
-        public Task<string> GetUsers();
+        public Task<string> GetUsersAsync();
+        public Task<bool> DeleteUserAsync(Guid id);
     }
 }
