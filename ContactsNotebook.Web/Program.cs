@@ -42,8 +42,8 @@ namespace ContactsNotebook.Web
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
 
-            app.UseStaticFiles();
             app.UseRequestHiddenPropertiesSupport();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

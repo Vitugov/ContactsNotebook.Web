@@ -58,11 +58,11 @@ namespace ContactsNotebook.Web.Controllers
         public IActionResult Edit()
         {
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            ViewBag.RequestMethod = "put";
+            ViewBag.RequestMethod = "POST";
             return View();
         }
 
-        [HttpPut("/Edit")]
+        [HttpPost("/Edit")]
         public async Task<IActionResult> Edit(Contact contact)
         {
             if (ModelState.IsValid)
@@ -75,7 +75,7 @@ namespace ContactsNotebook.Web.Controllers
                 return StatusCode(500, new { success = false, message = "При создании объекта возникла ошибка" });
             }
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            ViewBag.RequestMethod = "put";
+            ViewBag.RequestMethod = "POST";
             return View(contact);
         }
 
@@ -93,11 +93,11 @@ namespace ContactsNotebook.Web.Controllers
             }
 
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            ViewBag.RequestMethod = "post";
+            ViewBag.RequestMethod = "PUT";
             return View(contact);
         }
 
-        [HttpPost("/Edit/{id:int}")]
+        [HttpPut("/Edit/{id:int}")]
         public async Task<IActionResult> Edit(int id, Contact contact)
         {
             contact.Id = id;
@@ -110,13 +110,13 @@ namespace ContactsNotebook.Web.Controllers
                 var result = await _contactsApiClient.UpdateContactAsync(contact);
                 if (!result)
                 {
-                    return StatusCode(500, new { success = false, message = "При создании обновлении объекта возникла ошибка" });
+                    return StatusCode(500, new { success = false, message = "При обновлении объекта возникла ошибка" });
                 }
                 return RedirectToAction("Contacts");
             }
 
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
-            ViewBag.RequestMethod = "post";
+            ViewBag.RequestMethod = "PUT";
             return View(contact);
         }
     }

@@ -30,7 +30,7 @@ namespace ContactsNotebook.Web.Controllers
             return View();
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Add(RegisterViewModel model)
         {
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
@@ -44,7 +44,7 @@ namespace ContactsNotebook.Web.Controllers
             {
                 return BadRequest();
             }
-            return RedirectToAction("Users", "Index");
+            return RedirectToAction("Index","Users");
         }
 
         [HttpDelete("/[controller]/[action]/{id}")]
@@ -52,7 +52,7 @@ namespace ContactsNotebook.Web.Controllers
         {
             ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             if (!Guid.TryParse(id, out var guid))
-            {
+            { 
                 return BadRequest();
             }
             var success = await _authenticationApiClient.DeleteUserAsync(guid);
