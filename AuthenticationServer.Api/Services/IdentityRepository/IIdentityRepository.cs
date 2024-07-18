@@ -1,5 +1,5 @@
 ﻿using AuthenticationServer.Api.Models.Identity;
-using Microsoft.AspNetCore.Identity;
+using ContactsNotebook.Models.Identity;
 
 namespace AuthenticationServer.Api.Services.IdentityRepository
 {
@@ -10,7 +10,7 @@ namespace AuthenticationServer.Api.Services.IdentityRepository
         public Task<ApplicationUser?> GetUserByEmailAsync(string email);
         public Task<bool> DoesUserExistAsync(string email);
         public Task<bool> DoesUserExistAsync(Guid id);
-        public Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();
+        public Task<IEnumerable<UserView>> GetAllUsersAsync();
         public Task<ApplicationUser?> LoginAsync(string username, string password, bool isPersistent);
         public Task<IList<string>> GetRolesAsync(ApplicationUser user);
         public Task<bool> RefreshToken(ApplicationUser user, string token);

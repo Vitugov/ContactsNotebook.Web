@@ -1,18 +1,19 @@
 ﻿using ContactsNotebook.ApiClient;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using ContactsNotebook.Models;
-using ContactsNotebook.Web.Services.JwtTokenReader;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
 {
-    public class HomeController(IContactsApiClient contactsApiClient) : Controller
+    public class HomeController(IContactsApiClient contactsApiClient, JwtTokenHandler jwtTokenHandler) : Controller
     {
         private readonly IContactsApiClient _contactsApiClient = contactsApiClient;
+        private readonly JwtTokenHandler _jwtTokenHandler = jwtTokenHandler;
 
         [HttpGet("/")]
         public IActionResult Contacts()
         {
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
 
             return View();
         }
@@ -37,7 +38,7 @@ namespace ContactsNotebook.Web.Controllers
                 return NotFound();
             }
 
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
 
             return View(contact);
         }
@@ -56,7 +57,7 @@ namespace ContactsNotebook.Web.Controllers
         [HttpGet("/Edit")]
         public IActionResult Edit()
         {
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             ViewBag.RequestMethod = "put";
             return View();
         }
@@ -73,7 +74,7 @@ namespace ContactsNotebook.Web.Controllers
                 }
                 return StatusCode(500, new { success = false, message = "При создании объекта возникла ошибка" });
             }
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             ViewBag.RequestMethod = "put";
             return View(contact);
         }
@@ -91,7 +92,7 @@ namespace ContactsNotebook.Web.Controllers
                 return NotFound();
             }
 
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             ViewBag.RequestMethod = "post";
             return View(contact);
         }
@@ -114,7 +115,7 @@ namespace ContactsNotebook.Web.Controllers
                 return RedirectToAction("Contacts");
             }
 
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             ViewBag.RequestMethod = "post";
             return View(contact);
         }

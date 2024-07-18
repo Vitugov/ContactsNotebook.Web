@@ -44,5 +44,12 @@ namespace AuthenticationServer.Client
             }
             return true;
         }
+
+        public async Task<string> GetUsers()
+        {
+            var response = await _httpClient.GetAsync($"Authentication/GetUsers");
+            var content = await response.Content.ReadAsStringAsync();
+            return content;
+        }
     }
 }

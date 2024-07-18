@@ -1,5 +1,6 @@
 ﻿using AuthenticationServer.Api.Services.IdentityRepository;
 using AuthenticationServer.Api.Services.TokenGenerator;
+using ContactsNotebook.Lib.Attributes;
 using ContactsNotebook.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace AuthenticationServer.Api.Controllers
     {
         private readonly IIdentityRepository _repository = repository;
         private readonly IAccessTokenGenerator _tokenGenerator = tokenGenerator;
+
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
         {
@@ -33,6 +35,7 @@ namespace AuthenticationServer.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Administrator]
         public async Task<IActionResult> Delete(Guid id)
         {
             var doesExist = await _repository.DoesUserExistAsync(id);
@@ -47,6 +50,7 @@ namespace AuthenticationServer.Api.Controllers
             }
             return Ok();
         }
+
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
@@ -80,17 +84,24 @@ namespace AuthenticationServer.Api.Controllers
             var authorizationHeader = Request.Headers.Authorization.FirstOrDefault();
             if (authorizationHeader == null)
             {
-                return BadRequest();
+                return Forbid();
             }
             var accessToken = authorizationHeader.Substring(7);
             var user = _repository.FindUserByToken(accessToken);
             if (user == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             await _repository.RefreshToken(user, "");
             await _repository.LogOutAsync();
             return Ok();
+        }
+        [HttpGet]
+        [Administrator]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _repository.GetAllUsersAsync();
+            return Json(new { data = result });
         }
     }
 }

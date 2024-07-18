@@ -14,8 +14,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj" />
+    <ProjectReference Include="..\ContactsNotebook.Lib\ContactsNotebook.Lib.csproj" />
     <ProjectReference Include="..\ContactsNotebook.Middlewares\ContactsNotebook.Middlewares.csproj" />
     <ProjectReference Include="..\ContactsNotebook.Models\ContactsNotebook.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using AuthenticationServer.Api.Models.Identity;
+using ContactsNotebook.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthenticationServer.Api.Services.IdentityRepository
@@ -45,9 +46,22 @@ namespace AuthenticationServer.Api.Services.IdentityRepository
             return true;
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserView>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var users = _userManager.Users.ToList();
+            var result = new List<UserView>();
+            foreach (var user in users)
+            {
+                var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
+                var userView = new UserView()
+                {
+                    Id = user.Id.ToString(),
+                    Email = user.Email,
+                    IsAdmin = isAdmin
+                };
+                result.Add(userView);
+            }
+            return result;
         }
 
         public async Task<ApplicationUser?> GetUserByEmailAsync(string email)

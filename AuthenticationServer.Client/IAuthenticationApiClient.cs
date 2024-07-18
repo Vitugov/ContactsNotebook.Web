@@ -8,5 +8,6 @@ namespace AuthenticationServer.ApiClient
 
         public Task<TokenResponse?> LoginUserAsync(LoginViewModel loginViewModel);
         public Task<bool> LogoutUserAsync();
+        public Task<string> GetUsers();
     }
 }

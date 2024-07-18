@@ -1,5 +1,5 @@
-﻿using ContactsNotebook.Api.Attributes;
-using ContactsNotebook.DataAccess;
+﻿using ContactsNotebook.DataAccess;
+using ContactsNotebook.Lib.Attributes;
 using ContactsNotebook.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

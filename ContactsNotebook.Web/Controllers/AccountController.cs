@@ -1,22 +1,22 @@
 ﻿using AuthenticationServer.ApiClient;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using ContactsNotebook.Models.Identity;
-using ContactsNotebook.Web.Services.JwtTokenReader;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ContactsNotebook.Web.Controllers
 {
     [Route("[controller]/[action]")]
-    public class AccountController(IAuthenticationApiClient authenticationApiClient) : Controller
+    public class AccountController(IAuthenticationApiClient authenticationApiClient, JwtTokenHandler jwtTokenHandler) : Controller
     {
         private readonly IAuthenticationApiClient _authenticationApiClient = authenticationApiClient;
-
+        private readonly JwtTokenHandler _jwtTokenHandler = jwtTokenHandler;
 
 
         [HttpGet]
         public IActionResult Register()
         {
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             return View();
         }
 
@@ -34,21 +34,20 @@ namespace ContactsNotebook.Web.Controllers
                 return RedirectToAction("Contacts", "Home");
             }
 
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             return View(model);
         }
 
         [HttpGet]
         public IActionResult Login()
         {
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            ViewBag.UserRole = JwtTokenReader.GetRole(Request);
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -68,12 +67,6 @@ namespace ContactsNotebook.Web.Controllers
                 new Claim("JWT", accessToken)
             };
 
-            //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            //var principal = new ClaimsPrincipal(identity);
-
-            //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            // Сохранение refresh токена в HttpOnly куки
             Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
             {
                 HttpOnly = true,
@@ -88,7 +81,6 @@ namespace ContactsNotebook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            
             if (Request.Cookies["AccessToken"] != null)
             {
                 Response.Cookies.Delete("AccessToken");

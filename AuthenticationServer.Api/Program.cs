@@ -1,14 +1,13 @@
-using AuthenticationServer.Api.Models.Configuration;
 using AuthenticationServer.Api.Models.Identity;
 using AuthenticationServer.Api.Services.IdentityRepository;
 using AuthenticationServer.Api.Services.TokenGenerator;
 using ContactsNotebook.Identity;
+using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 
 namespace AuthenticationServer.Api
@@ -20,11 +19,17 @@ namespace AuthenticationServer.Api
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             var tokenConfiguration = new AccessTokenConfiguration();
             builder.Configuration.Bind("AccessTokenConfiguration", tokenConfiguration);
             builder.Services.AddSingleton(tokenConfiguration);
+
+            var jwtTokenHandler = new JwtTokenHandler(tokenConfiguration);
+            builder.Services.AddSingleton(jwtTokenHandler);
+
             builder.Services.AddScoped<IIdentityRepository, IdentityRepository>();
             builder.Services.AddSingleton<IAccessTokenGenerator, AccessTokenGenerator>();
+
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddUserStore<UserStore<ApplicationUser, ApplicationRole, AppIdentityDbContext, Guid>>()
@@ -49,36 +54,9 @@ namespace AuthenticationServer.Api
                 options.User.RequireUniqueEmail = true;
             });
 
-            builder.Services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-            });
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.Secret)),
-                    ValidIssuer = tokenConfiguration.Issuer,
-                    ValidAudience = tokenConfiguration.Audience,
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true
-                };
-                options.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context =>
-                    {
-                        var accessToken = context.Request.Cookies["AccessToken"];
-                        if (!string.IsNullOrEmpty(accessToken))
-                        {
-                            context.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
+                options.TokenValidationParameters = jwtTokenHandler.TokenValidationParameters;
             });
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -88,6 +66,8 @@ namespace AuthenticationServer.Api
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.MapControllers();
 
             app.Run();

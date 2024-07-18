@@ -1,10 +1,9 @@
-using ContactsNotebook.Api.Models.Configuration;
 using ContactsNotebook.DataAccess;
+using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using ContactsNotebook.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace ContactsNotebook.Api
 {
@@ -20,6 +19,9 @@ namespace ContactsNotebook.Api
             builder.Configuration.Bind("AccessTokenConfiguration", tokenConfiguration);
             builder.Services.AddSingleton(tokenConfiguration);
 
+            var jwtTokenHandler = new JwtTokenHandler(tokenConfiguration);
+            builder.Services.AddSingleton(jwtTokenHandler);
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -27,28 +29,19 @@ namespace ContactsNotebook.Api
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.Secret)),
-                    ValidIssuer = tokenConfiguration.Issuer,
-                    ValidAudience = tokenConfiguration.Audience,
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true
-                };
-                options.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context =>
-                    {
-                        var accessToken = context.Request.Cookies["AccessToken"];
-                        if (!string.IsNullOrEmpty(accessToken))
-                        {
-                            context.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
+                options.TokenValidationParameters = jwtTokenHandler.TokenValidationParameters;
+                //options.Events = new JwtBearerEvents
+                //{
+                //    OnMessageReceived = context =>
+                //    {
+                //        var accessToken = context.Request.Cookies["AccessToken"];
+                //        if (!string.IsNullOrEmpty(accessToken))
+                //        {
+                //            context.Token = accessToken;
+                //        }
+                //        return Task.CompletedTask;
+                //    }
+                //};
             });
 
             var app = builder.Build();

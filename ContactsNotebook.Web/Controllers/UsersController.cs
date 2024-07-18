@@ -1,31 +1,39 @@
-﻿using ContactsNotebook.Models.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using AuthenticationServer.ApiClient;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
+using ContactsNotebook.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsNotebook.Web.Controllers
 {
     [Route("/[controller]/[action]")]
-    [Authorize(Roles = "Administrator")]
-    public class UsersController : Controller
+    public class UsersController(IAuthenticationApiClient authenticationApiClient, JwtTokenHandler jwtTokenHandler) : Controller
     {
+        private readonly IAuthenticationApiClient _authenticationApiClient = authenticationApiClient;
+        private readonly JwtTokenHandler _jwtTokenHandler = jwtTokenHandler;
         public IActionResult Index()
         {
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             return View();
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll() => Json(new { data = await LoadFromIdentities([.. _userManager.Users]) });
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var jsonString = await _authenticationApiClient.GetUsers();
+            return Content(jsonString, "application/json");
+        }
 
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             return View();
         }
 
         [HttpPut]
         public async Task<IActionResult> Add(RegisterViewModel model)
         {
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             if (ModelState.IsValid)
             {
                 //var user = new IdentityUser { UserName = model.Email, Email = model.Email };
@@ -55,6 +63,7 @@ namespace ContactsNotebook.Web.Controllers
         [HttpDelete("/[controller]/[action]/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
+            ViewBag.UserRole = jwtTokenHandler.GetRoleFromCookieToken(ControllerContext);
             //var userToDelete = await _userManager.FindByIdAsync(id);
             //if (userToDelete == null)
             //{
@@ -66,18 +75,6 @@ namespace ContactsNotebook.Web.Controllers
             //}
             //await _userManager.DeleteAsync(userToDelete);
             return RedirectToAction("Index");
-        }
-
-        private async Task<List<UserView>> LoadFromIdentities(IEnumerable<IdentityUser> identityUsers)
-        {
-            var usersList = new List<UserView>();
-            //foreach (var identityUser in identityUsers)
-            //{
-            //    var isAdmin = await _userManager.IsInRoleAsync(identityUser, "Administrator");
-            //    var newUser = new UserView { Id = identityUser.Id, Email = identityUser.Email, IsAdmin = isAdmin };
-            //    usersList.Add(newUser);
-            //}
-            return usersList;
         }
     }
 }

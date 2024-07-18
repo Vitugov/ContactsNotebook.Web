@@ -1,6 +1,8 @@
 using AuthenticationServer.ApiClient;
 using AuthenticationServer.Client;
 using ContactsNotebook.ApiClient;
+using ContactsNotebook.Lib.Models.Configuration;
+using ContactsNotebook.Lib.Services.JwtTokenHandler;
 using ContactsNotebook.Middlewares;
 using Microsoft.EntityFrameworkCore;
 namespace ContactsNotebook.Web
@@ -23,15 +25,21 @@ namespace ContactsNotebook.Web
 
             }).AddHttpMessageHandler<AuthorizationHandler>();
 
-            // Регистрация IHttpContextAccessor
             builder.Services.AddHttpContextAccessor();
-
-            // Регистрация AuthorizationHandler
             builder.Services.AddTransient<AuthorizationHandler>();
+
+            var tokenConfiguration = new AccessTokenConfiguration();
+            builder.Configuration.Bind("AccessTokenConfiguration", tokenConfiguration);
+            builder.Services.AddSingleton(tokenConfiguration);
+
+            var jwtTokenHandler = new JwtTokenHandler(tokenConfiguration);
+            builder.Services.AddSingleton(jwtTokenHandler);
 
             builder.Services.AddSingleton<IContactsApiClient, ContactsApiClient>();
             builder.Services.AddSingleton<IAuthenticationApiClient, AuthenticationApiClient>();
 
+            builder.Services.AddAuthentication();
+            builder.Services.AddAuthorization();
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
 

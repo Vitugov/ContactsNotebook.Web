@@ -22,6 +22,7 @@
     <ProjectReference Include="..\AuthenticationServer.Client\AuthenticationServer.ApiClient.csproj" />
     <ProjectReference Include="..\ContactsNotebook.ApiClient\ContactsNotebook.ApiClient.csproj" />
     <ProjectReference Include="..\ContactsNotebook.DataAccess\ContactsNotebook.DataAccess.csproj" />
+    <ProjectReference Include="..\ContactsNotebook.Lib\ContactsNotebook.Lib.csproj" />
     <ProjectReference Include="..\ContactsNotebook.Middlewares\ContactsNotebook.Middlewares.csproj" />
     <ProjectReference Include="..\ContactsNotebook.Models\ContactsNotebook.Models.csproj" />
   </ItemGroup>
