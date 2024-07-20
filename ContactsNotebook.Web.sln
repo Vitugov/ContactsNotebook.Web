@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationServer.Api", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Lib", "ContactsNotebook.Lib\ContactsNotebook.Lib.csproj", "{84BCF09D-CF21-4974-841E-B815702764EA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsNotebook.Wpf", "ContactsNotebook.Wpf\ContactsNotebook.Wpf.csproj", "{BD282FDF-C489-40EF-B9AC-E7A2B9D37A15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsNotebook.EasyWpf", "ContactsNotebook.EasyWpf\ContactsNotebook.EasyWpf.csproj", "{9157ED60-2B7C-4E1B-935C-AA7E96D2F01C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84BCF09D-CF21-4974-841E-B815702764EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD282FDF-C489-40EF-B9AC-E7A2B9D37A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD282FDF-C489-40EF-B9AC-E7A2B9D37A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD282FDF-C489-40EF-B9AC-E7A2B9D37A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD282FDF-C489-40EF-B9AC-E7A2B9D37A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9157ED60-2B7C-4E1B-935C-AA7E96D2F01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9157ED60-2B7C-4E1B-935C-AA7E96D2F01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9157ED60-2B7C-4E1B-935C-AA7E96D2F01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9157ED60-2B7C-4E1B-935C-AA7E96D2F01C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

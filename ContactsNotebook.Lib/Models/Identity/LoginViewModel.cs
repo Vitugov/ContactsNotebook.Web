@@ -2,7 +2,7 @@
 
 namespace ContactsNotebook.Lib.Models.Identity
 {
-    public class LoginViewModel
+    public class LoginViewModel : ILoginViewModel
     {
         [Required]
         [EmailAddress]
